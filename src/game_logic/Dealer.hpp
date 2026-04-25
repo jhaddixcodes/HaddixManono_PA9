@@ -16,7 +16,7 @@ public:
 	* @return 'H' if hand is under 17, 'S' if hand is 17 or more.
 	* @pre Hand must not be busted.
 	*/
-	char getMove() const override;
+	char makeMoveConsole() const override;
 };
 
 #endif

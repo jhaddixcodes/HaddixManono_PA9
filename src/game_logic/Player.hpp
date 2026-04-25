@@ -21,7 +21,7 @@ public:
 	* @return 'H' if hit, 'S' if stand.
 	* @pre Hand must not be busted.
 	*/
-	char getMove() const override;
+	char makeMoveConsole() const override;
 
 	/**
 	* @brief Gets current bet from player.
@@ -34,6 +34,12 @@ public:
 	* @return Player's current balance.
 	*/
 	int getBalance() const;
+
+	/**
+	* @brief Set the player's bet.
+	* @param bet The new bet amount.
+	*/
+	void setCurrentBet(int bet);
 
 	/**
 	* @brief Add or subtract bet from player's balance based on if they won or lost.
