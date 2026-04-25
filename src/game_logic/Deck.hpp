@@ -1,8 +1,10 @@
 #ifndef DECK_HPP
 #define DECK_HPP
 
+#include <string>
 #include <vector>
 
+using std::string;
 using std::vector;
 
 enum class Suit
@@ -10,7 +12,7 @@ enum class Suit
 	SPADE, HEART, DIAMOND, CLUB
 };
 
-struct Card 
+struct Card
 {
 	Suit suit;
 	string symbol;
@@ -30,7 +32,7 @@ public:
 	* @return The card at the end of the deck.
 	* @pre Deck must not be empty.
 	*/
-	Card dealCard();
+	Card getCard();
 
 	/**
 	* @brief Checks if the deck is empty.
