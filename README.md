@@ -12,7 +12,7 @@ To run, first ensure Git and CMake are installed on your computer. CMake can be 
 
 ## How to Play
 
-The game begins with an input field in the center of the screen. You will notice your balance on the left side of the screen. This is the amount of money you can bet. You can enter your bet amount in the input field, then hit Enter to start the game. You can also enter 0 for no bet, which is especially useful if you don't want to have to take out a fourth mortgage on your house. The first three were already bad enough.
+The game begins with an input field in the center of the screen. You will notice your balance on the left side of the screen. This is the amount of money you can bet. You can enter your bet amount in the input field, then hit Enter to start the game.
 
 To hit, press Hit. To stand, press Stand. You likely already understand the rules of Blackjack, but to be clear your goal is to get as close to a score of 21 (which can be viewed on the side of the screen along with the dealer's score) as you can without going over.
 
