@@ -21,11 +21,14 @@ void Game::dealNewRound()
 	dealerHit();
 	dealerHit();
 
-	// check for blackjack, if either hand is blackjack we transition straight to round end and find out who won
-	if (m_player.isHandTwentyOne() || m_dealer.isHandTwentyOne()) 
+	// check for blackjack, if player's hand is blackjack we transition straight to round end
+	if (m_player.isHandTwentyOne())
 	{
 		toState(GameState::ROUND_OVER);
+		return;
 	}
+	m_dealer.setCardHidden(true);
+	toState(GameState::PLAYER_TURN);
 }
 
 void Game::playerHit()
@@ -33,6 +36,7 @@ void Game::playerHit()
 	m_player.hit(m_deck);
 	if (m_player.isHandBusted())
 	{
+		m_dealer.setCardHidden(false);
 		toState(GameState::DEALER_TURN);
 	}
 }
@@ -48,6 +52,7 @@ void Game::dealerHit()
 
 void Game::playerStand()
 {
+	m_dealer.setCardHidden(false);
 	toState(GameState::DEALER_TURN);
 }
 
@@ -56,19 +61,30 @@ void Game::dealerStand()
 	toState(GameState::ROUND_OVER);
 }
 
+void Game::playAgain()
+{
+	updatePlayerBalance();
+	toState(GameState::PLACING_BET);
+}
+
 const GameState Game::getGameState() const
 {
 	return m_gameState;
 }
 
-const Hand& Game::getPlayerHand() const
+bool Game::dealerWillHit() const
 {
-	return m_player.getHand();
+	return m_dealer.willHit();
 }
 
-const Hand& Game::getDealerHand() const
+vector<Card>& Game::getPlayerCards()
 {
-	return m_dealer.getHand();
+	return m_player.getHand().getCards();
+}
+
+vector<Card>& Game::getDealerCards()
+{
+	return m_dealer.getHand().getCards();
 }
 
 int Game::getPlayerScore() const
@@ -91,9 +107,32 @@ int Game::getPlayerBet() const
 	return m_player.getCurrentBet();
 }
 
+void Game::setPlayerBalance(int playerBalance)
+{
+	m_player.setBalance(playerBalance);
+}
+
 void Game::setPlayerBet(int playerBet)
 {
 	m_player.setCurrentBet(playerBet);
+	toState(GameState::WAITING_TO_DEAL);
+}
+
+void Game::updatePlayerBalance()
+{
+	if (m_gameState != GameState::ROUND_OVER)
+	{
+		return;
+	}
+
+	if (m_player.isHandBusted() || (m_dealer.getHandPoints() > m_player.getHandPoints() && !m_dealer.isHandBusted()))
+	{
+		m_player.setBalance(m_player.getBalance() - m_player.getCurrentBet());
+	}
+	else if (m_dealer.isHandBusted() || m_player.getHandPoints() > m_dealer.getHandPoints())
+	{
+		m_player.setBalance(m_player.getBalance() + m_player.getCurrentBet());
+	}
 }
 
 string Game::getResultMessage() const

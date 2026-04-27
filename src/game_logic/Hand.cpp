@@ -1,6 +1,6 @@
 #include "Hand.hpp"
 
-const vector<Card>& Hand::getCards() const
+vector<Card>& Hand::getCards()
 {
 	return m_cards;
 }
@@ -25,12 +25,16 @@ int Hand::calculatePoints() const
 	// iterate through all cards in the hand
 	for (const Card& card : m_cards)
 	{
-		// we keep track of how many aces so we can subtract 10s later
-		if (card.getSymbol() == "A")
+		// only consider shown cards
+		if (!card.getHidden())
 		{
-			numAces++;
+			// we keep track of how many aces so we can subtract 10s later
+			if (card.getSymbol() == "A")
+			{
+				numAces++;
+			}
+			points += card.getCardValue();
 		}
-		points += card.getCardValue();
 	}
 
 	// if points are above 21, subtract 10 until we're out of aces. if it's above 21 still, bwomp

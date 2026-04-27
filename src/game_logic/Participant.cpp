@@ -2,7 +2,7 @@
 
 Participant::Participant() : m_hand(Hand()) {}
 
-const Hand& Participant::getHand() const
+Hand& Participant::getHand()
 {
 	return m_hand;
 }

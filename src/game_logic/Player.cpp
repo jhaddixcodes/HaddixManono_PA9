@@ -5,16 +5,7 @@
 using std::cout;
 using std::cin;
 
-Player::Player() : Participant(), m_currentBet(0), m_balance(0) {}
-
-char Player::makeMoveConsole() const 
-{
-	char move;
-	cout << "Enter move (H/S): ";
-	cin >> move;
-
-	return move;
-}
+Player::Player() : Participant(), m_currentBet(0), m_balance(500) {}
 
 int Player::getCurrentBet() const
 {
@@ -31,18 +22,7 @@ void Player::setCurrentBet(int bet)
 	m_currentBet = bet;
 }
 
-void Player::updateBalance(Outcome roundOutcome)
+void Player::setBalance(int balance)
 {
-	if (roundOutcome == Outcome::Won)
-	{
-		// add the player's bet to their balance
-		m_balance += m_currentBet;
-	}
-	else if (roundOutcome == Outcome::Lost)
-	{
-		// subtract player's bet from their balance
-		m_balance -= m_currentBet;
-	}
-
-	// otherwise the player tied so do nothing
+	m_balance = balance;
 }

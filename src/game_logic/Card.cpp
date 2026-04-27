@@ -1,8 +1,8 @@
 #include "Card.hpp"
 
-Card::Card(Suit suit, string symbol) : m_suit(suit), m_symbol(symbol), m_points(0)
+Card::Card(Suit suit, string symbol, bool hidden) : m_suit(suit), m_symbol(symbol), m_hidden(hidden), m_points(0)
 {
-	// constructor written by Claude
+	// constructor written by Claude because I can't be bothered to write a switch statement
 	if (m_symbol == "10")
 	{
 		m_points = 10;
@@ -32,6 +32,18 @@ Suit Card::getSuit() const
 	return m_suit;
 }
 
+string Card::getSuitString() const
+{
+	switch (m_suit)
+	{
+		case Suit::CLUB: return "C";
+		case Suit::DIAMOND: return "D";
+		case Suit::HEART: return "H";
+		case Suit::SPADE: return "S";
+	}
+	return "?";
+}
+
 string Card::getSymbol() const
 {
 	return m_symbol;
@@ -40,4 +52,14 @@ string Card::getSymbol() const
 int Card::getCardValue() const
 {
 	return m_points;
+}
+
+bool Card::getHidden() const
+{
+	return m_hidden;
+}
+
+void Card::setHidden(bool hidden)
+{
+	m_hidden = hidden;
 }

@@ -2,13 +2,12 @@
 
 Dealer::Dealer() : Participant() {}
 
-char Dealer::makeMoveConsole() const
+void Dealer::setCardHidden(bool hidden)
 {
-	// in most casinos, the dealer hits until 17
-	if (getHandPoints() < 17) {
-		return 'H';
-	}
-	else {
-		return 'S';
-	}
+	getHand().getCards().front().setHidden(hidden);
+}
+
+bool Dealer::willHit() const
+{
+	return getHandPoints() < 17;
 }

@@ -1,3 +1,10 @@
+/*
+	Author: James Haddix
+	Written: Apr 24 2026
+	Last Updated: Apr 25 2026
+	Description: Deck class with shuffled Cards that can be taken out. This wraps a vector of Cards.
+*/
+
 #ifndef PARTICIPANT_HPP
 #define PARTICIPANT_HPP
 
@@ -17,21 +24,12 @@ public:
 	/**
 	* @return Returns a reference to the participant's hand
 	*/
-	const Hand& getHand() const;
+	Hand& getHand();
 
 	/**
 	* @brief Returns the number of points in the participant's hand
 	*/
 	int getHandPoints() const;
-
-	// TODO: makeMove()
-
-	/**
-	* @brief Gets move from participant (either hit or stand). This should be called when testing in the console.
-	* @return 'H' if hit, 'S' if stand.
-	* @pre Hand must not be busted.
-	*/
-	virtual char makeMoveConsole() const = 0;
 
 	/**
 	* @brief Hits the deck and adds the card to the participant's hand.

@@ -20,7 +20,7 @@ Deck::Deck()
 	{
 		for (const string& symbol : symbols) 
 		{
-			m_cards.push_back(Card(suit, symbol));
+			m_cards.push_back(Card(suit, symbol, false));
 		}
 	}
 

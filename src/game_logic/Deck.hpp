@@ -1,3 +1,10 @@
+/*
+	Author: James Haddix
+	Written: Apr 24 2026
+	Last Updated: Apr 24 2026
+	Description: Deck class with shuffled Cards that can be taken out. This wraps a vector of Cards.
+*/
+
 #ifndef DECK_HPP
 #define DECK_HPP
 

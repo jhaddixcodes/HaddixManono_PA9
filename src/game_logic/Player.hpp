@@ -1,12 +1,14 @@
+/*
+	Author: James Haddix
+	Written: Apr 24 2026
+	Last Updated: Apr 26 2026
+	Description: Player class that inherits from Participant.
+*/
+
 #ifndef PLAYER_HPP
 #define PLAYER_HPP
 
 #include "Participant.hpp"
-
-enum class Outcome
-{
-	Won, Lost, Tie
-};
 
 class Player : public Participant {
 public:
@@ -15,13 +17,6 @@ public:
 	* @brief Constructs a new player.
 	*/
 	Player();
-
-	/**
-	* @brief Gets move from player (either hit or stand). This should be called when testing in the console.
-	* @return 'H' if hit, 'S' if stand.
-	* @pre Hand must not be busted.
-	*/
-	char makeMoveConsole() const override;
 
 	/**
 	* @brief Gets current bet from player.
@@ -45,7 +40,7 @@ public:
 	* @brief Add or subtract bet from player's balance based on if they won or lost.
 	* @param roundOutcome The outcome of the current round.
 	*/
-	void updateBalance(Outcome roundOutcome);
+	void setBalance(int balance);
 
 private:
 	int m_currentBet;

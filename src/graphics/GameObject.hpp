@@ -1,6 +1,12 @@
-#pragma once
-#ifndef GAME_OBJECT_H
-#define GAME_OBJECT_H
+/*
+	Author: Lyon Manono
+	Written: Apr 23 2026
+	Last Updated: Apr 23 2026
+	Description: GameObject ABC that can be drawn at any position on the window
+*/
+
+#ifndef GAME_OBJECT_HPP
+#define GAME_OBJECT_HPP
 
 #include <SFML/Graphics.hpp>
 
