@@ -13,10 +13,18 @@ FetchContent_MakeAvailable(SFML)
  
 add_executable(HaddixManono_PA9
     src/main.cpp
-    src/GameObject.cpp
-    src/Card.cpp
-    src/Button.cpp
-)
+    src/graphics/GameObject.cpp
+    
+    src/graphics/Button.cpp
+    src/game_logic/Card.cpp
+    src/game_logic/Deck.cpp
+    src/game_logic/Hand.cpp
+    src/game_logic/Participant.cpp
+    src/game_logic/Player.cpp
+    src/game_logic/Dealer.cpp
+    src/game_logic/Game.cpp
+ "src/graphics/InputField.cpp" "src/graphics/drawHand.cpp")
+
 target_compile_features(HaddixManono_PA9 PRIVATE cxx_std_17)
 target_link_libraries(HaddixManono_PA9 PRIVATE SFML::Graphics)
 set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT HaddixManono_PA9)

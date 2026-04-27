@@ -1,17 +1,22 @@
 /*
-	Team: Lyon Manono and James Haddix
-	Date: Apr 24 2026
-	Description: Blackjack game using SFML. This file sets up the graphics
-				 scaffold - cards, buttons, table. Logic (deck, scoring,
-				 dealer AI) will be added later.
+	Authors: Lyon Manono, James Haddix
+	Created: Apr 23 2026
+	Last Updated: Apr 26 2026
+	Description: Blackjack game using SFML.
 */
 
 #include <SFML/Graphics.hpp>
-#include "Card.h"
-#include "Button.h"
+#include "graphics/Button.hpp"
+#include "graphics/InputField.hpp"
+#include "graphics/drawHand.hpp"
+#include "game_logic/Game.hpp"
 
 int main()
 {
+
+	// the game interface
+	Game game;
+
 	// make the window
 	sf::RenderWindow window(sf::VideoMode({ 900, 650 }), "Blackjack");
 	window.setFramerateLimit(60);
@@ -20,27 +25,13 @@ int main()
 	sf::Font font;
 	bool fontLoaded = font.openFromFile("assets/font.ttf");
 
-	// placeholder cards so there's something to look at
-	// (the logic side will replace these with real hands)
-	Card dealerCard1(13, 3, 350.f, 80.f);   // King of Spades
-	dealerCard1.setFaceUp(true);
-	if (fontLoaded) dealerCard1.setFont(&font);
-
-	Card dealerCard2(0, 0, 430.f, 80.f);    // hidden hole card
-	if (fontLoaded) dealerCard2.setFont(&font);
-
-	Card playerCard1(1, 0, 350.f, 400.f);   // Ace of Hearts
-	playerCard1.setFaceUp(true);
-	if (fontLoaded) playerCard1.setFont(&font);
-
-	Card playerCard2(10, 2, 430.f, 400.f);  // 10 of Clubs
-	playerCard2.setFaceUp(true);
-	if (fontLoaded) playerCard2.setFont(&font);
+	// text entry for entering a bet
+	InputField betField(350.f, 300.f, 200.f, 50.f);
+	if (fontLoaded) betField.setFont(&font);
 
 	// --- buttons ---
 	Button hitButton("Hit", 720.f, 450.f, 130.f, 50.f);
 	if (fontLoaded) hitButton.setFont(&font);
-
 
 	Button standButton("Stand", 720.f, 520.f, 130.f, 50.f);
 	if (fontLoaded) standButton.setFont(&font);
@@ -48,26 +39,51 @@ int main()
 	Button dealButton("Deal", 50.f, 520.f, 130.f, 50.f);
 	if (fontLoaded) dealButton.setFont(&font);
 
+	Button playAgainButton("Play Again", 350.f, 350.f, 200.f, 50.f);
+	if (fontLoaded) playAgainButton.setFont(&font);
+
+	Button quitGameButton("Quit Game", 350.f, 425.f, 200.f, 50.f);
+	if (fontLoaded) quitGameButton.setFont(&font);
+
 	// --- text labels for the table ---
-	sf::Text dealerLabel(font);
-	sf::Text playerLabel(font);
+	sf::Text dealerPointsLabel(font);
+	sf::Text playerPointsLabel(font);
 	sf::Text statusMessage(font);
+	sf::Text playerBalanceLabel(font);
+	sf::Text playerBetLabel(font);
+
+	// only render text if the font is loaded
 	if (fontLoaded)
 	{
-		dealerLabel.setString("Dealer");
-		dealerLabel.setCharacterSize(24);
-		dealerLabel.setFillColor(sf::Color::White);
-		dealerLabel.setPosition(sf::Vector2f(50.f, 80.f));
+		dealerPointsLabel.setString("Dealer: ");
+		dealerPointsLabel.setCharacterSize(24);
+		dealerPointsLabel.setFillColor(sf::Color::White);
+		dealerPointsLabel.setPosition(sf::Vector2f(50.f, 80.f));
 
-		playerLabel.setString("Player");
-		playerLabel.setCharacterSize(24);
-		playerLabel.setFillColor(sf::Color::White);
-		playerLabel.setPosition(sf::Vector2f(50.f, 400.f));
+		playerPointsLabel.setString("Player: ");
+		playerPointsLabel.setCharacterSize(24);
+		playerPointsLabel.setFillColor(sf::Color::White);
+		playerPointsLabel.setPosition(sf::Vector2f(50.f, 400.f));
 
-		statusMessage.setString("Click Deal to start!");
+		playerBalanceLabel.setString("test");
+		playerBalanceLabel.setCharacterSize(24);
+		playerBalanceLabel.setFillColor(sf::Color::White);
+		playerBalanceLabel.setPosition(sf::Vector2f(50.f, 450.f));
+
+		playerBetLabel.setString("test");
+		playerBetLabel.setCharacterSize(24);
+		playerBetLabel.setFillColor(sf::Color::White);
+		playerBetLabel.setPosition(sf::Vector2f(50.f, 500.f));
+
+		statusMessage.setString("");
 		statusMessage.setCharacterSize(28);
 		statusMessage.setFillColor(sf::Color::Yellow);
-		statusMessage.setPosition(sf::Vector2f(320.f, 280.f));
+
+		// to center statusMessage on screen, we can get the rectangle that bounds it and set its origin based on the center of that rectangle
+		// taken from https://stackoverflow.com/questions/14505571/centering-text-on-the-screen-with-sfml
+		sf::FloatRect textBounds = statusMessage.getLocalBounds();
+		statusMessage.setOrigin(textBounds.getCenter());
+		statusMessage.setPosition(sf::Vector2f(450.f, 325.f));
 	}
 
 	// main game loop 
@@ -88,44 +104,152 @@ int main()
 					int mx = mousePressed->position.x;
 					int my = mousePressed->position.y;
 
+					// handle whether betfield is focused
+					if (game.getGameState() == GameState::PLACING_BET)
+					{
+						betField.setFocused(betField.isClicked(mx, my));
+					}
+					else
+					{
+						betField.setFocused(false);
+					}
+
+					if (game.getGameState() == GameState::WAITING_TO_DEAL)
+					{
+						if (dealButton.isClicked(mx, my))
+						{
+							game.dealNewRound();
+						}
+					}
+
 					// These are placeholders. James will replace the bodies
 					// with actual game logic.
-					if (hitButton.isClicked(mx, my))
+					if (game.getGameState() == GameState::PLAYER_TURN)
 					{
-						// TODO (logic): deal another card to player
+						if (hitButton.isClicked(mx, my))
+						{
+							game.playerHit();
+						}
+						if (standButton.isClicked(mx, my))
+						{
+							game.playerStand();
+						}
 					}
-					if (standButton.isClicked(mx, my))
+
+					if (game.getGameState() == GameState::ROUND_OVER)
 					{
-						// TODO (logic): reveal dealer hole card, dealer plays
-						dealerCard2.setFaceUp(true);  // quick demo behavior
+						if (playAgainButton.isClicked(mx, my))
+						{
+							game.playAgain();
+						}
+						if (quitGameButton.isClicked(mx, my))
+						{
+							window.close();
+						}
 					}
-					if (dealButton.isClicked(mx, my))
+				}
+			}
+			
+			// handle text input...
+			else if (const sf::Event::TextEntered* text = event->getIf<sf::Event::TextEntered>())
+			{
+				// ...if we expect it
+				if (game.getGameState() == GameState::PLACING_BET)
+				{
+					// 13 is the unicode for Enter
+					if (text->unicode == 13 && !betField.empty())
 					{
-						// TODO (logic): reset and start a new round
-						dealerCard2.setFaceUp(false); // quick demo behavior
+						int bet = std::stoi(betField.getText());
+						if (bet <= game.getPlayerBalance())
+						{
+							// update player's bet, move to next state
+							game.setPlayerBet(bet);
+							game.dealNewRound();
+						}
+					}
+
+					else
+					{
+						betField.handleInput(*text);
 					}
 				}
 			}
 		}
 
+		// handle dealer turn
+		if (game.getGameState() == GameState::DEALER_TURN)
+		{
+			if (game.dealerWillHit())
+			{
+				game.dealerHit();
+			}
+			else
+			{
+				game.dealerStand();
+			}
+		}
+
+		if (fontLoaded)
+		{
+			// update dealer and player scores
+			dealerPointsLabel.setString("Dealer: " + std::to_string(game.getDealerScore()));
+			playerPointsLabel.setString("Player: " + std::to_string(game.getPlayerScore()));
+
+			// change status message. if game state isn't roundover this'll be blank
+			statusMessage.setString(game.getResultMessage());
+			sf::FloatRect textBounds = statusMessage.getLocalBounds();
+			statusMessage.setOrigin(textBounds.getCenter());
+			statusMessage.setPosition(sf::Vector2f(450.f, 325.f));
+
+			// change player balance and bet message.
+			playerBalanceLabel.setString("Balance: " + std::to_string(game.getPlayerBalance()));
+			playerBetLabel.setString("Bet: " + std::to_string(game.getPlayerBet()));
+		}
 		// drawing
 		window.clear(sf::Color(0, 100, 0));  // green felt table
 
 		if (fontLoaded)
 		{
-			window.draw(dealerLabel);
-			window.draw(playerLabel);
+			window.draw(dealerPointsLabel);
+			window.draw(playerPointsLabel);
+			window.draw(playerBalanceLabel);
+			window.draw(playerBetLabel);
 			window.draw(statusMessage);
 		}
 
-		dealerCard1.draw(window);
-		dealerCard2.draw(window);
-		playerCard1.draw(window);
-		playerCard2.draw(window);
+		// draw cards in player's and dealer's hand
+		if (!game.getPlayerCards().empty())
+		{
+			drawHand(window, game.getPlayerCards(), &font, 450.f, 550.f);
+		}
+		if (!game.getDealerCards().empty())
+		{
+			drawHand(window, game.getDealerCards(), &font, 450.f, 100.f);
+		}
 
-		hitButton.draw(window);
-		standButton.draw(window);
-		dealButton.draw(window);
+		
+
+		if (game.getGameState() == GameState::PLACING_BET)
+		{
+			betField.draw(window);
+		}
+		
+		else if (game.getGameState() == GameState::WAITING_TO_DEAL)
+		{
+			dealButton.draw(window);
+		}
+
+		else if (game.getGameState() == GameState::PLAYER_TURN || game.getGameState() == GameState::DEALER_TURN)
+		{
+			hitButton.draw(window);
+			standButton.draw(window);
+		}
+
+		else if (game.getGameState() == GameState::ROUND_OVER)
+		{
+			playAgainButton.draw(window);
+			quitGameButton.draw(window);
+		}
 
 		window.display();
 	}

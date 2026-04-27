@@ -1,8 +1,14 @@
-#pragma once
-#ifndef BUTTON_H
-#define BUTTON_H
+/*
+	Author: Lyon Manono
+	Written: Apr 23 2026
+	Last Updated: Apr 23 2026
+	Description: Clickable Button class that inherits from GameObject
+*/
 
-#include "GameObject.h"
+#ifndef BUTTON_HPP
+#define BUTTON_HPP
+
+#include "GameObject.hpp"
 #include <SFML/Graphics.hpp>
 #include <string>
 
@@ -16,7 +22,7 @@ public:
 	~Button();
 
 	// overridden from GameObject
-	void draw(sf::RenderWindow& window);
+	void draw(sf::RenderWindow& window) override;
 
 	// checks if the given mouse position is inside this button
 	bool isClicked(int mouseX, int mouseY);
