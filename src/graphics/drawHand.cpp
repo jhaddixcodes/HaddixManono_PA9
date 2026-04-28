@@ -1,5 +1,10 @@
 #include "drawHand.hpp"
+
+// suit color picking and unicode symbol lookup generated with Claude
+// Prompt: "Generate the unicode escape codes for playing card suits
+// in SFML sf::String"
 //helper to get unicode suit symbol for a card
+
 sf::String getSuitSymbol(Suit suit)
 {
 	if (suit == Suit::HEART) return L"\u2665";
