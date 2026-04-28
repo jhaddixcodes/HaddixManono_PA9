@@ -23,4 +23,5 @@ We hope you enjoy our game, and best of luck!
 ## Credits
 
 Frontend programmed by Lyon Manono
+
 Backend programmed by James Haddix
