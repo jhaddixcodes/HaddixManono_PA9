@@ -34,11 +34,6 @@ public:
 	Suit getSuit() const;
 
 	/**
-	* @return The card's suit as a string.
-	*/
-	string getSuitString() const;
-
-	/**
 	* @return The card's symbol.
 	*/
 	string getSymbol() const;

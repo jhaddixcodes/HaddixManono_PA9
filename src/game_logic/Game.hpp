@@ -1,7 +1,7 @@
 /*
-	Author: James Haddix
+	Author: James Haddix, Lyon Manono
 	Written: Apr 24 2026
-	Last Updated: Apr 26 2026
+	Last Updated: Apr 27 2026
 	Description: Game class containing everything needed to run a blackjack game. Basically a state machine, though very likely a bad one.
 */
 

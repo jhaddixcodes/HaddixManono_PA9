@@ -23,7 +23,10 @@ add_executable(HaddixManono_PA9
     src/game_logic/Player.cpp
     src/game_logic/Dealer.cpp
     src/game_logic/Game.cpp
- "src/graphics/InputField.cpp" "src/graphics/drawHand.cpp")
+    src/graphics/InputField.cpp
+    src/graphics/drawHand.cpp
+    src/tests/GameTests.cpp
+)
 
 target_compile_features(HaddixManono_PA9 PRIVATE cxx_std_17)
 target_link_libraries(HaddixManono_PA9 PRIVATE SFML::Graphics)

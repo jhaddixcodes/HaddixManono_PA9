@@ -32,18 +32,6 @@ Suit Card::getSuit() const
 	return m_suit;
 }
 
-string Card::getSuitString() const
-{
-	switch (m_suit)
-	{
-		case Suit::CLUB: return "C";
-		case Suit::DIAMOND: return "D";
-		case Suit::HEART: return "H";
-		case Suit::SPADE: return "S";
-	}
-	return "?";
-}
-
 string Card::getSymbol() const
 {
 	return m_symbol;

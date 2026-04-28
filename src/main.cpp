@@ -10,9 +10,13 @@
 #include "graphics/InputField.hpp"
 #include "graphics/drawHand.hpp"
 #include "game_logic/Game.hpp"
+#include "tests/GameTests.hpp"
 
 int main()
 {
+	// run tests from GameTests
+	testAll();
+
 	// the game interface
 	Game game;
 
@@ -212,6 +216,7 @@ int main()
 							betField.clear();
 						}
 					}
+
 					else
 					{
 						betField.handleInput(*text);

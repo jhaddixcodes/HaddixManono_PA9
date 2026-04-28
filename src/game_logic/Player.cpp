@@ -1,9 +1,4 @@
-#include <iostream>
-
 #include "Player.hpp"
-
-using std::cout;
-using std::cin;
 
 Player::Player() : Participant(), m_currentBet(0), m_balance(500) {}
 

@@ -26,7 +26,7 @@ void Game::dealNewRound()
 
 	// if either side has blackjack on the deal, end the round immediately
 	// reveal dealer's hole card so the player can see why
-	if (m_player.isHandTwentyOne() || m_dealer.getHand().getCards()[0].getCardValue() + m_dealer.getHand().getCards()[1].getCardValue() == 21)
+	if (m_player.isHandTwentyOne() || m_dealer.isHandTwentyOne())
 	{
 		m_dealer.setCardHidden(false);
 		toState(GameState::ROUND_OVER);
