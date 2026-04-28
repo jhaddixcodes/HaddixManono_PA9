@@ -3,6 +3,9 @@
 	Written: Apr 23 2026
 	Last Updated: Apr 23 2026
 	Description: Clickable Button class that inherits from GameObject
+	Note: Centered text math in draw() generated with Claude.
+	Prompt: "How do I center sf::Text inside a rectangle in SFML 3,
+	accounting for getLocalBounds offset"
 */
 
 #ifndef BUTTON_HPP
