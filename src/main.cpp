@@ -32,6 +32,16 @@ int main()
 	InputField betField(350.f, 300.f, 200.f, 50.f);
 	if (fontLoaded) betField.setFont(&font);
 
+	/* 
+	UI element coordinates (button positions, label positions, card row y-values)
+ 	were refined with Claude to avoid overlap between cards, buttons, and text
+ 	labels at different game states.
+ 	Prompt: "Player cards draw centered at y=500 with height 100, where should
+ 	I put the Play Again and Quit buttons so they don't overlap the cards?"
+	"Generate the most user friendly coordinate positions for the buttons and 
+	labels"
+	*/
+	
 	// buttons for the different game states
 	Button hitButton("Hit", 720.f, 450.f, 130.f, 50.f);
 	if (fontLoaded) hitButton.setFont(&font);
@@ -115,8 +125,11 @@ int main()
 	}
 
 	// clock used to slow down the dealer's auto hits so they don't all happen in one frame
+	// dealer pacing using sf::Clock generated with Claude.
+ 	// Prompt: "How can I add a delay between dealer auto-hits in an SFML game loop without blocking the main thread"
+	
 	sf::Clock dealerClock;
-	float dealerDelay = 0.9f; // seconds between dealer actions
+	float dealerDelay = 0.8f; // seconds between dealer actions
 
 	// flag for when the player has gone broke. when true we show the broke screen
 	bool playerBroke = false;
