@@ -6,7 +6,9 @@ This is Lyon Manono and James Haddix's final project for CPTS_122 (both lecture 
 
 This repository was originally created from a repository template used for building SFML projects with CMake. As a result, it uses CMake to build.
 
-To run, first ensure Git and CMake are installed on your computer. CMake can be installed directly through the Visual Studio Installer. By the time this project is due, there should be a ZIP file with the project contents under the Releases tab of the repository. You can extract this file and open the folder in Visual Studio. Because there is a CMakeLists.txt file, Visual Studio should automatically detect it as a CMake project and automatically configure it. You can then build and run it normally.*
+To run, first ensure Git and CMake are installed on your computer. CMake can be installed directly through the Visual Studio Installer. 
+
+We recommend cloning this repository on your system to access the files, but if this isn't possible, by the time this project is due, there should be a ZIP file with the project contents under the Releases tab of the repository. You can extract this file and open the folder in Visual Studio. Because there is a CMakeLists.txt file, Visual Studio should automatically detect it as a CMake project and automatically configure it. You can then build and run it normally.*
 
 *You may have to select a target to build first, but otherwise running the project should be straightforward.
 
