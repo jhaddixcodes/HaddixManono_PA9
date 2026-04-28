@@ -59,7 +59,7 @@ int main()
 	sf::Text betHintLabel(font);
 	sf::Text titleLabel(font);
 	sf::Text brokeLabel(font); 
-	sf::Text brokeSubLabel(font);
+	
 
 	// only set up text if the font loaded
 	if (fontLoaded)
@@ -283,7 +283,6 @@ int main()
 			{
 				window.draw(titleLabel);
 				window.draw(brokeLabel);
-				window.draw(brokeSubLabel);
 			}
 			endGameButton.draw(window);
 			window.display();
