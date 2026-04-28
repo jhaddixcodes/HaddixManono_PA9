@@ -59,6 +59,7 @@ int main()
 	sf::Text betHintLabel(font);
 	sf::Text titleLabel(font);
 	sf::Text brokeLabel(font); 
+	sf::Text brokeSubLabel(font);
 
 	// only set up text if the font loaded
 	if (fontLoaded)
@@ -102,6 +103,11 @@ int main()
 		titleLabel.setFillColor(sf::Color::White);
 		titleLabel.setPosition(sf::Vector2f(370.f, 10.f));
 
+		// broke screen message
+		brokeLabel.setString("You're out of money!");
+		brokeLabel.setCharacterSize(36);
+		brokeLabel.setFillColor(sf::Color::Yellow);
+		brokeLabel.setPosition(sf::Vector2f(280.f, 250.f));
 	}
 
 	// clock used to slow down the dealer's auto hits so they don't all happen in one frame
@@ -277,6 +283,7 @@ int main()
 			{
 				window.draw(titleLabel);
 				window.draw(brokeLabel);
+				window.draw(brokeSubLabel);
 			}
 			endGameButton.draw(window);
 			window.display();
