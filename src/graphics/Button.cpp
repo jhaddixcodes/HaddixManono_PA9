@@ -69,6 +69,7 @@ void Button::draw(sf::RenderWindow& window)
 	label.setCharacterSize(18);
 	label.setFillColor(sf::Color::Black);
 
+	// centering math from Claude, accounts for SFML's text bounds offset
 	sf::FloatRect textBounds = label.getLocalBounds();
 	float textX = xPos + (buttonWidth - textBounds.size.x) / 2.f - textBounds.position.x;
 	float textY = yPos + (buttonHeight - textBounds.size.y) / 2.f - textBounds.position.y;
