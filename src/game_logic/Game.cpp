@@ -21,13 +21,17 @@ void Game::dealNewRound()
 	dealerHit();
 	dealerHit();
 
-	// check for blackjack, if player's hand is blackjack we transition straight to round end
-	if (m_player.isHandTwentyOne())
+	// hide dealer's first card so isHandTwentyOne reads the correct dealer score below
+	m_dealer.setCardHidden(true);
+
+	// if either side has blackjack on the deal, end the round immediately
+	// reveal dealer's hole card so the player can see why
+	if (m_player.isHandTwentyOne() || m_dealer.getHand().getCards()[0].getCardValue() + m_dealer.getHand().getCards()[1].getCardValue() == 21)
 	{
+		m_dealer.setCardHidden(false);
 		toState(GameState::ROUND_OVER);
 		return;
 	}
-	m_dealer.setCardHidden(true);
 	toState(GameState::PLAYER_TURN);
 }
 
@@ -37,7 +41,7 @@ void Game::playerHit()
 	if (m_player.isHandBusted())
 	{
 		m_dealer.setCardHidden(false);
-		toState(GameState::DEALER_TURN);
+		toState(GameState::ROUND_OVER);
 	}
 }
 
@@ -64,6 +68,9 @@ void Game::dealerStand()
 void Game::playAgain()
 {
 	updatePlayerBalance();
+	// clear out the old hands, we dont wanna see the old hands as we decide to play again
+	m_player.emptyHand();
+	m_dealer.emptyHand();
 	toState(GameState::PLACING_BET);
 }
 
