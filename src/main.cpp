@@ -6,6 +6,7 @@
 */
 
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include "graphics/Button.hpp"
 #include "graphics/InputField.hpp"
 #include "graphics/drawHand.hpp"
@@ -124,6 +125,25 @@ int main()
 		brokeLabel.setPosition(sf::Vector2f(280.f, 250.f));
 	}
 
+	// set up music
+	sf::Music music;
+	bool musicLoaded = music.openFromFile("assets/AllOfMe.ogg");
+	if (musicLoaded)
+	{
+		music.setLooping(true);
+		music.setVolume(20.f);
+		music.play();
+	}
+
+	// set up sound effects stored in a buffer for some reason
+	sf::SoundBuffer shuffleCardsBuffer;
+	bool shuffleSoundLoaded = shuffleCardsBuffer.loadFromFile("assets/ShuffleCards.ogg");
+	sf::Sound shuffleSound(shuffleCardsBuffer);
+
+	sf::SoundBuffer dealCardBuffer;
+	bool dealSoundLoaded = dealCardBuffer.loadFromFile("assets/DealCard.ogg");
+	sf::Sound dealSound(dealCardBuffer);
+
 	// clock used to slow down the dealer's auto hits so they don't all happen in one frame
 	// dealer pacing using sf::Clock generated with Claude.
  	// Prompt: "How can I add a delay between dealer auto-hits in an SFML game loop without blocking the main thread"
@@ -176,6 +196,7 @@ int main()
 					{
 						if (dealButton.isClicked(mx, my))
 						{
+							shuffleSound.play();
 							game.dealNewRound();
 						}
 					}
@@ -184,6 +205,7 @@ int main()
 					{
 						if (hitButton.isClicked(mx, my))
 						{
+							dealSound.play();
 							game.playerHit();
 							// if player just busted, the round is already over so no dealer clock needed
 						}
@@ -245,6 +267,7 @@ int main()
 			{
 				if (game.dealerWillHit())
 				{
+					dealSound.play();
 					game.dealerHit();
 				}
 				else

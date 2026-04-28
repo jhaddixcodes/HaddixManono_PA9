@@ -14,7 +14,6 @@ FetchContent_MakeAvailable(SFML)
 add_executable(HaddixManono_PA9
     src/main.cpp
     src/graphics/GameObject.cpp
-    
     src/graphics/Button.cpp
     src/game_logic/Card.cpp
     src/game_logic/Deck.cpp
@@ -29,7 +28,7 @@ add_executable(HaddixManono_PA9
 )
 
 target_compile_features(HaddixManono_PA9 PRIVATE cxx_std_17)
-target_link_libraries(HaddixManono_PA9 PRIVATE SFML::Graphics)
+target_link_libraries(HaddixManono_PA9 PRIVATE SFML::Graphics SFML::Audio)
 set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT HaddixManono_PA9)
  
 # Copy the assets folder next to the exe so it can find fonts/images at runtime
