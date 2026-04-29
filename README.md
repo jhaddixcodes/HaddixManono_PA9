@@ -1,6 +1,6 @@
 # Blackjack - Created by Lyon Manono and James Haddix
 
-This is Lyon Manono and James Haddix's final project for CPTS_122 (both lecture section 1, lab section 4) at Washington State University during the Spring 2026 semester: Blackjack implemented using C++'s SFML library!
+This is Lyon Manono and James Haddix's final project for CPTS_122 (both lecture section 1, lab section 4) at Washington State University during the Spring 2026 semester: Blackjack implemented using C++'s SFML library! [Click here](https://youtu.be/CJeb9sTGFXc) for a demonstration of the game.
 
 ## Instructions for Building
 
